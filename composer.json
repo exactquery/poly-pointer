@@ -1,0 +1,24 @@
+{
+    "name": "exactquery/poly-pointer",
+    "description": "Vanilla Javascript psuedo-polyfill for Media Query Level 4's '(pointer:coarse)'",
+    "keywords": [
+        "polyfill",
+        "media query level 4",
+        "pointer",
+        "coarse",
+        "touch",
+        "metro",
+        "tablet"
+    ],
+    "version": "1.0",
+    "license": "https://github.com/exactquery/poly-pointer/blob/master/LICENSE",
+    "authors": [
+        {
+            "name": "AMJones",
+            "email": "am@jonesiscoding.com"
+        }
+    ],
+    "require": {
+        "exactquery/xq-detect": "dev-master"
+    }
+}
