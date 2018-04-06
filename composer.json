@@ -20,6 +20,6 @@
         }
     ],
     "require": {
-        "exactquery/xq-detect": "dev-master"
+        "exactquery/xq-detect": "^3.0"
     }
 }
