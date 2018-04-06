@@ -11,7 +11,8 @@
         "tablet"
     ],
     "version": "1.0",
-    "license": "https://github.com/exactquery/poly-pointer/blob/master/LICENSE",
+    "homepage": "https://www.github.com/exactquery/poly-pointer",
+    "license": "MIT",
     "authors": [
         {
             "name": "AMJones",
