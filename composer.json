@@ -10,7 +10,7 @@
         "metro",
         "tablet"
     ],
-    "version": "1.0",
+    "version": "1.0.1",
     "homepage": "https://www.github.com/exactquery/poly-pointer",
     "license": "MIT",
     "authors": [

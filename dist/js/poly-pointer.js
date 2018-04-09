@@ -1,5 +1,5 @@
 /**
- * xqDetect v3.0 (https://github.com/exactquery/xq-detect)
+ * xqDetect v3.0.1 (https://github.com/exactquery/xq-detect)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/xq-detect/blob/master/LICENSE)
  */
@@ -46,6 +46,7 @@ var detect = function (w, d) {
   function save( tests, cookieName ) {
     var recipe = {};
     var cName = cookieName || 'djs';
+    _dt.first = !hasCookie( cName );
     for ( var key in tests ) {
       if ( tests.hasOwnProperty( key ) && ( key in _dt ) ) {
         var args = ( 'object' === typeof tests[ key ] ) ? tests[ key ] : [ tests[ key ] ];
@@ -59,7 +60,7 @@ var detect = function (w, d) {
     }
     de.className = de.className.replace( 'no-js', 'js' );
     de.setAttribute( 'data-user-agent', nav.userAgent );
-    document.cookie = cName + '=' + JSON.stringify( recipe ) + ';path=/';
+    d.cookie = cName + '=' + JSON.stringify( recipe ) + ';path=/';
   }
   
   /**
@@ -69,7 +70,7 @@ var detect = function (w, d) {
    * @returns {boolean}
    */
   function ua(arg) {
-    var pattern = ( arg instanceof RegExp ) ? arg : new RegExp('/(' + arg + ')/i');
+    var pattern = ( arg instanceof RegExp ) ? arg : new RegExp('(' + arg + ')','i');
     
     return true === ( pattern.test( nav.userAgent ) );
   }
@@ -81,21 +82,17 @@ var detect = function (w, d) {
    * @returns {number}
    */
   function getScrollbar() {
-    var sb = d.getElementById( 'xqsbM' ) ||
-      ( function () {
-        var sbel = '<div style="width:100px;overflow:scroll;position:absolute;top:-9999px;"><div id="xqsbM" style="margin-right:calc(100px - 100%);"></div></div>';
-        d.body.insertAdjacentHTML( 'beforeend', sbel );
-        return d.getElementById( 'xqsbM' );
-      } )();
-    
-    return parseInt(getComputedStyle( sb ).marginRight);
+    var sb = d.createElement("div");
+    sb.setAttribute('style','width:100px;height: 100px;overflow-y:scroll;position:absolute;top:-9999px;-ms-overflow-style:auto;');
+    d.body.appendChild(sb);
+    var width = sb.offsetWidth - sb.clientWidth;
+    d.body.removeChild(sb);
+  
+    return width;
   }
   
-  function isBreakpoint(points) {
-    var query = window.getComputedStyle(document.querySelector('body'), ':before').getPropertyValue('content').replace(/\"/g, '') || null;
-    if ( !Array === points.constructor ) { points = [ points ]; }
-    
-    return (null !== query) ? (points.indexOf(query) !== -1) : null;
+  function hasCookie(cName) {
+    return ('cookie' in d && d.cookie.match(new RegExp('([;\s]+)?' + cName + '=')));
   }
   
   /**
@@ -122,26 +119,27 @@ var detect = function (w, d) {
    * @returns {boolean}
    */
   function isHighRes(tRatio) {
-    var ratio = tRatio || 1.5;
+    var ratio  = tRatio || 1.5;
     var minRes = ratio * 96;
+    var pWmdpr = '-webkit-min-device-pixel-ratio: ';
+    var pMr    = 'min-resolution: ';
     
     // Primary method, as this doesn't fall victim to issues with zooming.
-    var testQuery = '(-webkit-min-device-pixel-ratio: 1.0), (min-resolution: 96dpi), (min-resolution: 1dppx)';
-    if ( mq( testQuery ) ) {
-      var mediaQuery = '(-webkit-min-device-pixel-ratio: ' + ratio + '), (min-resolution: ' + minRes + 'dpi), (min-resolution: ' + ratio + 'dppx)';
-      return mq( mediaQuery );
+    var test = '(' + pWmdpr + '1.0), (' + pMr + '96dpi), (' + pMr + '1dppx)';
+    if ( mq( test ) ) {
+      var query = '(' + pWmdpr + ratio + '), (' + pMr + minRes + 'dpi), (' + pMr + ratio + 'dppx)';
+      return mq( query );
     }
     
     // Fallback for older versions & mobile versions of IE
-    var deviceXDPI = ( typeof w.screen.deviceXDPI !== 'undefined' ) ? w.screen.deviceXDPI : null;
-    var logicalXDPI = ( typeof w.screen.logicalXPDI !== 'undefined' ) ? w.screen.logicalXPDI : null;
-    if ( deviceXDPI && logicalXDPI ) {
-      return true === ( ( deviceXDPI / logicalXDPI ) > ratio );
+    var dXDPI = ( typeof w.screen.deviceXDPI !== 'undefined' ) ? w.screen.deviceXDPI : null;
+    var lXDPI = ( typeof w.screen.logicalXPDI !== 'undefined' ) ? w.screen.logicalXPDI : null;
+    if ( dXDPI && lXDPI ) {
+      return true === ( ( dXDPI / lXDPI ) > ratio );
     }
     
     // Final fallback, which WILL report HiDPI if the window is zoomed.
-    var devicePixelRatio = w.devicePixelRatio || 1;
-    return true === ( devicePixelRatio > ratio );
+    return true === ( (w.devicePixelRatio || 1) > ratio );
   }
   
   /**
@@ -161,11 +159,9 @@ var detect = function (w, d) {
    * @returns {boolean}
    */
   function isTouch() {
-    if ( mq( '(pointer:coarse)' ) || mq( '(-moz-touch-enabled)' ) ) { return true; }
-    if ( "ontouchstart" in w ) { return true; }
-    if ( ( nav.maxTouchPoints > 0 || nav.msMaxTouchPoints > 0 ) ) { return true; }
-    
-    return true === ua('touch');
+    var mtp = nav.maxTouchPoints || nav.msMaxTouchPoints || 0;
+  
+    return true === (mq('(pointer:coarse') || mq('-moz-touch-enabled') || ('ontouchstart' in w) || mtp > 0 || ua('touch'));
   }
   
   // Special Functions
@@ -182,13 +178,14 @@ var detect = function (w, d) {
   _dt.baseline   = isBaseline();
   
   // Functions (results of these tests can change during session)
-  _dt.breakpoint = isBreakpoint;
+  _dt.cookie     = hasCookie;
   _dt.highres    = isHighRes;
   _dt.hidpi      = isHighRes;
   _dt.metered    = isMetered;
   _dt.retina     = isHighRes;
   _dt.scrollbar  = getScrollbar;
   _dt.touch      = isTouch;
+  _dt.ua         = ua;
   
   return _dt;
   
@@ -196,10 +193,6 @@ var detect = function (w, d) {
 /**
  * Adds 'activex' test to detection script.  Use with 'detect.activex()'.  Will return FALSE if
  * the browser is not capable of ActiveX.  Intended for aiding tests for IE10/11 in 'Metro Mode'.
- *
- * From PolyPointer v1.0 (https://github.com/exactquery/poly-pointer)
- * @author  Aaron M Jones [am@jonesiscoding.com]
- * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE)
  */
 detect.add('activex', function() {
   try {
@@ -211,13 +204,19 @@ detect.add('activex', function() {
 
 /**
  * Full test for IE10/11 on Win8/8.1 in Metro Mode.  User Agent + Touch + NO ActiveX = Metro
- *
- * From PolyPointer v1.0 (https://github.com/exactquery/poly-pointer)
- * @author  Aaron M Jones [am@jonesiscoding.com]
- * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE)
  */
 detect.add( 'metro', function () {
   return true === ( detect.ua( 'Trident\/[6|7]' ) && detect.touch() && !detect.activex() );
+} );
+
+/**
+ * Detects legacy touch devices that do not have pointer:coarse support.
+ */
+detect.add( 'legacy', function () {
+  var dt = detect;
+
+  return true === ( !( dt.mq( '(pointer:coarse)' ) || dt.mq( '(-moz-touch-enabled)' ) )
+          && dt.touch() && ( dt.android || dt.ios ) );
 } );
 /**
  * Provides a psuedo-polyfill for CSS media rules for touch screens.  Intended for allowing browsers that can
@@ -234,7 +233,7 @@ detect.add( 'metro', function () {
  *
  * IE - @media handheld, screen and (pointer:coarse) works.  @media handheld and (pointer:coarse) does not work.
  *
- * From PolyPointer v1.0 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.1 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE
  * @type {{function}}
@@ -307,27 +306,23 @@ var polyPointer = function ( d ) {
  *
  *    * IE10/11 on Windows 8/8.1 in "Metro Mode"
  *    * Hybrid Machine w/ Mouse & Touch on Microsoft Edge on Windows 10 in "Tablet Mode"
+ *    * Android 4.4.4 & Below, iOS 8.3 & Below
  *
  * No other browsers should be affected, unless they are doing user agent spoofing & somehow meet the other qualifications.
  *
- * From PolyPointer v1.0 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.1 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE)
  */
 ( function ( pp, dt, d ) {
-  // Metro Mode on Win8 (IE10/11, Touch, No ActiveX)
-  var isMetro = dt.metro();
-  // Tablet Mode on Win10 (Not Metro, Screen Size = Window Size, MS Edge, Hybrid Machine, Touch Screen (scrollbar test later)
-  var isEdgeHybrid = !isMetro && (screen.width === window.innerWidth) && dt.ua( 'Edge' ) && !dt.mq( '(pointer:coarse)' ) && dt.touch();
-
-  if ( isMetro ) {
-    // We can just load the polyfill immediately.
-    pp.polyfill({ handheld: true });
-  } else if ( isEdgeHybrid ) {
-    // We still need to measure the width of the scrollbar, which sadly cannot be done until the dom has loaded.
+  if ( dt.metro() || dt.legacy() ) {
+    // IE10/11 on Win8/8.1, Android < 5.0, iOS < 9.
+    pp.polyfill( { handheld: true } );
+  } else if ( ( screen.width === window.innerWidth ) && dt.ua( 'Edge' ) && !dt.mq( '(pointer:coarse)' ) && dt.touch() ) {
+    // MS Edge on Win10 in 'Tablet Mode' (Sadly, measuring scrollbar cannot be done until dom has loaded)
     d.addEventListener( "DOMContentLoaded", function ( event ) {
       if ( dt.scrollbar() === 0 ) {
-        pp.polyfill({coarse: true});
+        pp.polyfill( { coarse: true } );
       }
     } );
   }
