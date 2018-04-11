@@ -234,7 +234,7 @@ detect.add( 'legacy', function () {
  *
  * IE - @media handheld, screen and (pointer:coarse) works.  @media handheld and (pointer:coarse) does not work.
  *
- * From PolyPointer v1.0.1 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.2 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE
  * @type {{function}}
@@ -258,10 +258,11 @@ var polyPointer = function ( d ) {
       for ( var n = 0; n < rules.length; n++ ) {
         var rule = rules[ n ];
         if ( rule.type === CSSRule.MEDIA_RULE ) {
-          if ( handheld && rule.media.mediaText.match( /(handheld)\s?(and\s)?([^,]+)?, not all/i ) ) {
+          if ( handheld && _inObj( rule.media, /handheld/i ) && _inObj( rule.media, /(not all|\(pointer:\s?coarse\))/i ) ) {
             handheldRules.push( rule );
           }
-          if ( coarse && rule.media.mediaText.match( /\s?(and)?\s?\(pointer:\s?coarse\)/g ) ) {
+
+          if ( coarse && _inObj( rule.media, /\(pointer:\s?coarse\)/i ) ) {
             coarseRules.push( rule );
           }
         }
@@ -269,6 +270,23 @@ var polyPointer = function ( d ) {
     }
 
     return { handheld: handheldRules, coarse: coarseRules };
+  }
+
+  /**
+   *
+   * @param {object} obj
+   * @param {object} rx
+   * @returns {boolean}
+   * @private
+   */
+  function _inObj( obj, rx ) {
+    for ( var x = 0; x < obj.length; x++ ) {
+      if ( rx.test( obj[ x ] ) ) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   /**
@@ -311,7 +329,7 @@ var polyPointer = function ( d ) {
  *
  * No other browsers should be affected, unless they are doing user agent spoofing & somehow meet the other qualifications.
  *
- * From PolyPointer v1.0.1 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.2 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE)
  */
