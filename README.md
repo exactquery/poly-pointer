@@ -1,7 +1,7 @@
 # PolyPointer
 PolyPointer is a psuedo-polyfill for the [Media Query Level 4](https://www.w3.org/TR/mediaqueries-4/#descdef-media-pointer) *pointer:coarse* feature, written in vanilla javascript.
 
-It was written one evening after work when grew frustrated with not being able to present a touch friendly interface to our clients with touch screen devices without also having hybrid devices like laptops with touch screens using the same interface.  It kind of worked.  Then, I deleted the CodePen.  So, I rewrote it.  Then...what you see here.  And it works.
+It was written one evening after work when grew frustrated with not being able to present a touch friendly interface to our clients with touch screen devices without also having hybrid devices like laptops with touch screens using the same interface.  It kind of worked.  Then, I accidentally deleted the CodePen.  After a few choice words, I rewrote it as what you see here.  And it works.
 
 Imagine being able to use an easy little media query like @media screen and (pointer:coarse) to present a touch-friendly interface for your website's tablet and phone tapping visitors. 
 
@@ -32,6 +32,8 @@ The real intent, however, is to target the situations below, where it is either 
  - iOS 8.4 and Below
 
 ## Show Me the Awesome! Let's Talk Usage.
+
+Check out this [Demo CodePen](https://codepen.io/jonesiscoding/full/qoQbXm/) on one of the devices mentioned above to see it in action!
 
 Using the script is a simple as placing the distribution JS in the `<HEAD>` of your HTML, then writing your CSS rules that are intended for touch devices inside media queries like so:
 
