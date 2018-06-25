@@ -13,7 +13,7 @@
  *
  * IE - @media handheld, screen and (pointer:coarse) works.  @media handheld and (pointer:coarse) does not work.
  *
- * From PolyPointer v1.0.2 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.3 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE
  * @type {{function}}
@@ -60,9 +60,8 @@ var polyPointer = function ( d ) {
    */
   function _inObj( obj, rx ) {
     for ( var x = 0; x < obj.length; x++ ) {
-      if ( rx.test( obj[ x ] ) ) {
-        return true;
-      }
+      var item = ( typeof obj.item === 'function' ) ? obj.item( x ) : obj[ x ];
+      if ( rx.test( item ) ) { return true; }
     }
 
     return false;
