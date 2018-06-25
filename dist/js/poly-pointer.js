@@ -1,7 +1,7 @@
 /**
- * xqDetect v3.0.2 (https://github.com/exactquery/xq-detect)
+ * Device v3.0.3 (https://github.com/jonesiscoding/device)
  * @author  Aaron M Jones [am@jonesiscoding.com]
- * @licence MIT (https://github.com/exactquery/xq-detect/blob/master/LICENSE)
+ * @licence MIT (https://github.com/jonesiscoding/device/blob/master/LICENSE)
  */
 var detect = function (w, d) {
   'use strict';
@@ -234,9 +234,9 @@ detect.add( 'legacy', function () {
  *
  * IE - @media handheld, screen and (pointer:coarse) works.  @media handheld and (pointer:coarse) does not work.
  *
- * From PolyPointer v1.0.2 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.3 (https://github.com/deviscoding/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
- * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE
+ * @licence MIT (https://github.com/deviscoding/poly-pointer/blob/master/LICENSE
  * @type {{function}}
  */
 var polyPointer = function ( d ) {
@@ -281,9 +281,8 @@ var polyPointer = function ( d ) {
    */
   function _inObj( obj, rx ) {
     for ( var x = 0; x < obj.length; x++ ) {
-      if ( rx.test( obj[ x ] ) ) {
-        return true;
-      }
+      var item = ( typeof obj.item === 'function' ) ? obj.item( x ) : obj[ x ];
+      if ( rx.test( item ) ) { return true; }
     }
 
     return false;
@@ -329,7 +328,7 @@ var polyPointer = function ( d ) {
  *
  * No other browsers should be affected, unless they are doing user agent spoofing & somehow meet the other qualifications.
  *
- * From PolyPointer v1.0.2 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.3 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE)
  */

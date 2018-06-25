@@ -13,9 +13,9 @@
  *
  * IE - @media handheld, screen and (pointer:coarse) works.  @media handheld and (pointer:coarse) does not work.
  *
- * From PolyPointer v1.0.3 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.3 (https://github.com/deviscoding/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
- * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE
+ * @licence MIT (https://github.com/deviscoding/poly-pointer/blob/master/LICENSE
  * @type {{function}}
  */
 var polyPointer = function ( d ) {

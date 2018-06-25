@@ -1,5 +1,5 @@
 {
-    "name": "exactquery/poly-pointer",
+    "name": "deviscoding/poly-pointer",
     "description": "Vanilla Javascript psuedo-polyfill for Media Query Level 4's '(pointer:coarse)'",
     "keywords": [
         "polyfill",
@@ -8,10 +8,11 @@
         "coarse",
         "touch",
         "metro",
-        "tablet"
+        "tablet",
+        "exactquery"
     ],
-    "version": "1.0.2",
-    "homepage": "https://www.github.com/exactquery/poly-pointer",
+    "version": "1.0.3",
+    "homepage": "https://www.github.com/deviscoding/poly-pointer",
     "license": "MIT",
     "authors": [
         {
@@ -19,7 +20,10 @@
             "email": "am@jonesiscoding.com"
         }
     ],
+    "replace": {
+        "exactquery/poly-pointer": "^2.0"
+    },
     "require": {
-        "exactquery/xq-detect": "^3.0"
+        "deviscoding/device": "^3.0"
     }
 }

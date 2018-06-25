@@ -7,7 +7,7 @@
  *
  * No other browsers should be affected, unless they are doing user agent spoofing & somehow meet the other qualifications.
  *
- * From PolyPointer v1.0.2 (https://github.com/exactquery/poly-pointer)
+ * From PolyPointer v1.0.3 (https://github.com/exactquery/poly-pointer)
  * @author  Aaron M Jones [am@jonesiscoding.com]
  * @licence MIT (https://github.com/exactquery/poly-pointer/blob/master/LICENSE)
  */
