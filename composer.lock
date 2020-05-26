@@ -4,20 +4,20 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "99acbcf04128f72ca21e14a63835e744",
+    "content-hash": "9b9c665e0ab9be8287e1241f679db22c",
     "packages": [
         {
             "name": "deviscoding/device",
-            "version": "4.0.1",
+            "version": "4.0.2",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jonesiscoding/device.git",
-                "reference": "e314727ca0ffda423daa98fa32e0cadf418295cf"
+                "reference": "8fd7c3d23ed5fa9b3fcd4ae80b2de065c2eb8d34"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jonesiscoding/device/zipball/e314727ca0ffda423daa98fa32e0cadf418295cf",
-                "reference": "e314727ca0ffda423daa98fa32e0cadf418295cf",
+                "url": "https://api.github.com/repos/jonesiscoding/device/zipball/8fd7c3d23ed5fa9b3fcd4ae80b2de065c2eb8d34",
+                "reference": "8fd7c3d23ed5fa9b3fcd4ae80b2de065c2eb8d34",
                 "shasum": ""
             },
             "require": {
@@ -56,7 +56,7 @@
                 "retina",
                 "touch"
             ],
-            "time": "2020-05-26T13:22:25+00:00"
+            "time": "2020-05-26T18:23:53+00:00"
         }
     ],
     "packages-dev": [],
@@ -66,5 +66,6 @@
     "prefer-stable": false,
     "prefer-lowest": false,
     "platform": [],
-    "platform-dev": []
+    "platform-dev": [],
+    "plugin-api-version": "1.1.0"
 }
