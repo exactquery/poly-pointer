@@ -1,27 +1,27 @@
 {
     "_readme": [
         "This file locks the dependencies of your project to a known state",
-        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#composer-lock-the-lock-file",
+        "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "6fadbc112b257fd65694f6b8f39358b6",
+    "content-hash": "99acbcf04128f72ca21e14a63835e744",
     "packages": [
         {
             "name": "deviscoding/device",
-            "version": "3.0.3",
+            "version": "4.0.1",
             "source": {
                 "type": "git",
                 "url": "https://github.com/jonesiscoding/device.git",
-                "reference": "13c906e6307ad68a53c9cfb978f62445297db65c"
+                "reference": "e314727ca0ffda423daa98fa32e0cadf418295cf"
             },
             "dist": {
                 "type": "zip",
-                "url": "https://api.github.com/repos/jonesiscoding/device/zipball/13c906e6307ad68a53c9cfb978f62445297db65c",
-                "reference": "13c906e6307ad68a53c9cfb978f62445297db65c",
+                "url": "https://api.github.com/repos/jonesiscoding/device/zipball/e314727ca0ffda423daa98fa32e0cadf418295cf",
+                "reference": "e314727ca0ffda423daa98fa32e0cadf418295cf",
                 "shasum": ""
             },
-            "replace": {
-                "exactquery/xq-detect": "^3.0"
+            "require": {
+                "ext-json": "*"
             },
             "suggest": {
                 "deviscoding/poly-pointer": "Psuedo-Polyfill for (pointer:coarse). Easy support of touch devices."
@@ -29,7 +29,8 @@
             "type": "library",
             "autoload": {
                 "psr-4": {
-                    "XQ\\": "src"
+                    "DevCoding\\Device\\": "src/Device",
+                    "DevCoding\\ValueObject\\": "src/ValueObject"
                 }
             },
             "notification-url": "https://packagist.org/downloads/",
@@ -55,7 +56,7 @@
                 "retina",
                 "touch"
             ],
-            "time": "2018-05-08T14:13:02+00:00"
+            "time": "2020-05-26T13:22:25+00:00"
         }
     ],
     "packages-dev": [],

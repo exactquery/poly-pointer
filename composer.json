@@ -24,6 +24,6 @@
         "exactquery/poly-pointer": "^2.0"
     },
     "require": {
-        "deviscoding/device": "^3.0"
+        "deviscoding/device": "^4.0"
     }
 }
