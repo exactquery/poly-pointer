@@ -26,7 +26,7 @@
     return width;
   }
 
-  if ( dt.preference.metro() || dt.hardware.t && !dt.hardware.pc ) {
+  if ( dt.preference.mm() || dt.hardware.lt() ) {
     // IE10/11 on Win8/8.1, Android < 5.0, iOS < 9.
     pp.polyfill( { handheld: true } );
   } else if ( ( screen.width === window.innerWidth ) && dt.ua( 'Edge' ) && !dt.hardware.pc && dt.hardware.t ) {
